@@ -1,40 +1,41 @@
-import { useCallback, useMemo } from "react";
-import { getSpaceCharacters } from "../functions/print";
+import { useMemo } from "react";
 import { DisplayPropertyComponent, Print } from "../types";
-import { getPathFromClickEvent } from "../functions/path";
+import useJsonProperty from "./hooks/use-json-property";
 
 interface Props extends DisplayPropertyComponent {
   print: Print;
 }
 
 export default function PrimitiveProperty({
-  print: { value, propertyName, spaces },
+  print,
   path,
   onPropertyClicked
 }: Props): JSX.Element {
-  const calculatedPath = useMemo(() => `${path}.${propertyName}`, [path, propertyName]);
-  const isString = useMemo(() => typeof value === 'string', [value]);
 
-  const createPropertyPath = useCallback((event: React.MouseEvent<HTMLElement>) => {
-    onPropertyClicked(getPathFromClickEvent(event));
-  }, [onPropertyClicked]);
+  const {
+    spaceCharacters,
+    calculatedPath,
+    onPropertySelected
+  } = useJsonProperty({ print, path, onPropertyClicked });
+
+  const isString = useMemo(() => typeof print.value === 'string', [print.value]);
 
   return (
     <span>
-      {getSpaceCharacters(spaces)}
-      {(propertyName ? (
+      {spaceCharacters}
+      {(print.propertyName ? (
         <>
           <span
             className="property"
             data-path={calculatedPath}
-            onClick={createPropertyPath}
+            onClick={onPropertySelected}
           >
-            {propertyName}
+            {print.propertyName}
           </span>
           :{' '}
         </>
       ) : '')}
-      {(isString ? `'${value.toString()}'` : value.toString())}
+      {(isString ? `'${print.value.toString()}'` : print.value.toString())}
       {',\n'}
     </span>
   );

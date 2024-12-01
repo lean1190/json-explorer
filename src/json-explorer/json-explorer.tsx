@@ -1,23 +1,20 @@
-import { useCallback, useMemo, useState } from 'react';
 import './json-explorer.css';
 import { JsonObject } from './types';
-import { extractNestedValue } from './extract';
 import Property from './components/property';
+import useJsonExplorer from './hooks/use-json-explorer';
 
 interface Props<T extends JsonObject> {
   jsonObject: T;
 }
 
 export default function JsonExplorer<T extends JsonObject>({ jsonObject }: Props<T>) {
-  const [typedPropertyAccessor, setTypedPropertyAccessor] = useState<string>('');
 
-  const accessedPropertyValue = useMemo(() => {
-    return extractNestedValue(jsonObject, typedPropertyAccessor)?.toString() ?? 'undefined';
-  }, [jsonObject, typedPropertyAccessor]);
-
-  const onPropertyClicked = useCallback((propertyPath: string) => {
-    setTypedPropertyAccessor(() => propertyPath);
-  }, []);
+  const {
+    typedPropertyAccessor,
+    accessedPropertyValue,
+    setTypedPropertyAccessor,
+    onPropertyClicked
+  } = useJsonExplorer(jsonObject);
 
   return (
     <article className="json-explorer">
