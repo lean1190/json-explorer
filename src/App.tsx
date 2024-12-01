@@ -14,7 +14,7 @@ function App() {
     ]
   };
 
-  return <main><JsonExplorer jsonObject={demoData} /></main>
+  return <main><JsonExplorer<typeof demoData> jsonObject={demoData} /></main>
 }
 
 export default App
