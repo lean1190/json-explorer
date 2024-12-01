@@ -1,8 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import './json-explorer.css';
-import { printProperty } from './print';
 import { JsonObject } from './types';
 import { extractNestedValue } from './extract';
+import Property from './components/property';
 
 interface Props<T extends JsonObject> {
   jsonObject: T;
@@ -14,6 +14,10 @@ export default function JsonExplorer<T extends JsonObject>({ jsonObject }: Props
   const accessedPropertyValue = useMemo(() => {
     return extractNestedValue(jsonObject, typedPropertyAccessor)?.toString() ?? 'undefined';
   }, [jsonObject, typedPropertyAccessor]);
+
+  const onPropertyValueClicked = useCallback((propertyPath: string) => {
+    setTypedPropertyAccessor(() => propertyPath);
+  }, []);
 
   return (
     <article className="json-explorer">
@@ -39,12 +43,10 @@ export default function JsonExplorer<T extends JsonObject>({ jsonObject }: Props
           {Object
             .getOwnPropertyNames(jsonObject)
             .map((propertyName) => (
-              <span key={propertyName}>
-                {printProperty({
-                  value: jsonObject[propertyName],
-                  propertyName
-                })}
-              </span>))
+              <Property key={propertyName} print={{
+                value: jsonObject[propertyName],
+                propertyName
+              }} />))
           }
         </pre>
       </section>
