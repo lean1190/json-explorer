@@ -15,7 +15,7 @@ export default function JsonExplorer<T extends JsonObject>({ jsonObject }: Props
     return extractNestedValue(jsonObject, typedPropertyAccessor)?.toString() ?? 'undefined';
   }, [jsonObject, typedPropertyAccessor]);
 
-  const onPropertyValueClicked = useCallback((propertyPath: string) => {
+  const onPropertyClicked = useCallback((propertyPath: string) => {
     setTypedPropertyAccessor(() => propertyPath);
   }, []);
 
@@ -26,7 +26,7 @@ export default function JsonExplorer<T extends JsonObject>({ jsonObject }: Props
           <label htmlFor="property">Property</label>
           <input
             type="text"
-            name="property"
+            id="property"
             placeholder="Property"
             value={typedPropertyAccessor}
             onChange={(event) => setTypedPropertyAccessor(event.target.value)}
@@ -43,10 +43,14 @@ export default function JsonExplorer<T extends JsonObject>({ jsonObject }: Props
           {Object
             .getOwnPropertyNames(jsonObject)
             .map((propertyName) => (
-              <Property key={propertyName} print={{
-                value: jsonObject[propertyName],
-                propertyName
-              }} />))
+              <Property
+                key={propertyName}
+                print={{
+                  value: jsonObject[propertyName],
+                  propertyName
+                }}
+                onPropertyClicked={onPropertyClicked}
+              />))
           }
         </pre>
       </section>

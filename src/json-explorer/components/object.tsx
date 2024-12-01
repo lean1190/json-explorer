@@ -1,14 +1,17 @@
 import { getSpaceCharacters } from "../functions/print";
-import { Print } from "../types";
+import { DisplayPropertyComponent, Print } from "../types";
 import { JsonObject } from "../types";
 import { useMemo } from "react";
 import Property from "./property";
 
-interface Props {
+interface Props extends DisplayPropertyComponent {
   print: (Print & { value: JsonObject });
 }
 
-export default function ObjectProperty({ print: { value, propertyName, spaces } }: Props): JSX.Element {
+export default function ObjectProperty({
+  print: { value, propertyName, spaces },
+  onPropertyClicked
+}: Props): JSX.Element {
   const spaceCharacters = useMemo(() => getSpaceCharacters(spaces), [spaces]);
 
   return (
@@ -22,11 +25,15 @@ export default function ObjectProperty({ print: { value, propertyName, spaces } 
         Object
           .getOwnPropertyNames((value))
           .map((property) => (
-            <Property key={property} print={{
-              value: (value as JsonObject)[property],
-              propertyName: property,
-              spaces: spaces + 2
-            }} />
+            <Property
+              key={property}
+              print={{
+                value: (value as JsonObject)[property],
+                propertyName: property,
+                spaces: spaces + 2
+              }}
+              onPropertyClicked={onPropertyClicked}
+            />
           ))
       }
       {`${spaceCharacters}},`}

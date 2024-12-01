@@ -26,3 +26,12 @@
     padding: 16px;
     border: 1px solid;
 }
+
+.property {
+  color: lightskyblue;
+  cursor: pointer;
+}
+
+.property:hover {
+  text-decoration: underline;
+}
