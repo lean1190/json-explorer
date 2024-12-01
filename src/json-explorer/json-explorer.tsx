@@ -38,10 +38,13 @@ export default function JsonExplorer<T extends JsonObject>({ jsonObject }: Props
         <pre role="document" aria-label="JSON Data" className="json-content">
           {Object
             .getOwnPropertyNames(jsonObject)
-            .reduce((acc, propertyName) => `${acc}${printProperty({
-                value: jsonObject[propertyName],
-                propertyName
-            })}`, '')
+            .map((propertyName) => (
+              <span key={propertyName}>
+                {printProperty({
+                  value: jsonObject[propertyName],
+                  propertyName
+                })}
+              </span>))
           }
         </pre>
       </section>
