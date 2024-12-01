@@ -3,6 +3,7 @@ export type JsonObject = Record<string, Value>;
 
 export interface DisplayPropertyComponent {
   print: Partial<Print>;
+  path: string;
   onPropertyClicked: (path: string) => void;
 }
 

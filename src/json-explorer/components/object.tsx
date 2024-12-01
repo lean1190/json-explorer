@@ -10,6 +10,7 @@ interface Props extends DisplayPropertyComponent {
 
 export default function ObjectProperty({
   print: { value, propertyName, spaces },
+  path,
   onPropertyClicked
 }: Props): JSX.Element {
   const spaceCharacters = useMemo(() => getSpaceCharacters(spaces), [spaces]);
@@ -27,6 +28,7 @@ export default function ObjectProperty({
           .map((property) => (
             <Property
               key={property}
+              path={path}
               print={{
                 value: (value as JsonObject)[property],
                 propertyName: property,

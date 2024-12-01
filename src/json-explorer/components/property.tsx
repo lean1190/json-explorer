@@ -13,22 +13,35 @@ export default function Property({
     propertyName = '',
     spaces = 0
   },
+  path,
   onPropertyClicked
 }: Props): JSX.Element {
   if (typeof value === 'boolean' || typeof value === 'number' || typeof value === 'string') {
-    return <PrimitiveProperty onPropertyClicked={onPropertyClicked} print={{ value, propertyName, spaces }} />;
+    return <PrimitiveProperty
+      print={{ value, propertyName, spaces }}
+      path={path}
+      onPropertyClicked={onPropertyClicked}
+    />;
   }
 
   if (Array.isArray(value)) {
-    return <ArrayProperty onPropertyClicked={onPropertyClicked} print={{ value, propertyName, spaces }} />;
+    return <ArrayProperty
+      print={{ value, propertyName, spaces }}
+      path={path}
+      onPropertyClicked={onPropertyClicked}
+    />;
   }
 
   if (typeof value === 'object') {
-    return <ObjectProperty onPropertyClicked={onPropertyClicked} print={{
-      value: value as JsonObject,
-      propertyName,
-      spaces
-    }} />;
+    return <ObjectProperty
+      print={{
+        value: value as JsonObject,
+        propertyName,
+        spaces
+      }}
+      path={path}
+      onPropertyClicked={onPropertyClicked}
+    />;
   }
 
   return <span>Unexpected data type</span>;

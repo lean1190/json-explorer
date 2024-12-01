@@ -49,6 +49,7 @@ export default function JsonExplorer<T extends JsonObject>({ jsonObject }: Props
                   value: jsonObject[propertyName],
                   propertyName
                 }}
+                path="res"
                 onPropertyClicked={onPropertyClicked}
               />))
           }

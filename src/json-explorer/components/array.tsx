@@ -1,7 +1,8 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { getSpaceCharacters } from "../functions/print";
 import { DisplayPropertyComponent, Print, Value } from "../types";
 import Property from "./property";
+import { getPathFromClickEvent } from "../functions/path";
 
 interface Props extends DisplayPropertyComponent {
   print: (Print & { value: Value[] });
@@ -9,10 +10,15 @@ interface Props extends DisplayPropertyComponent {
 
 export default function ArrayProperty({
   print: { value, propertyName, spaces },
+  path,
   onPropertyClicked
 }: Props) : JSX.Element {
+
+  const calculatedPath = useMemo(() => `${path}.${propertyName}`, [path, propertyName]);
+  const calculateItemPath = useCallback((index: number) => `${calculatedPath}[${index}]`, [calculatedPath]);
+
   const createPropertyPath = useCallback((event: React.MouseEvent<HTMLElement>) => {
-    onPropertyClicked('');
+    onPropertyClicked(getPathFromClickEvent(event));
   }, [onPropertyClicked]);
 
   return (
@@ -22,6 +28,7 @@ export default function ArrayProperty({
         <>
           <span
             className="property"
+            data-path={calculatedPath}
             onClick={createPropertyPath}
           >
             {propertyName}
@@ -30,9 +37,15 @@ export default function ArrayProperty({
         </>
       }
       {
-        value.map((current, index) => (
-          <Property onPropertyClicked={onPropertyClicked} key={index} print={{ value: current, spaces: spaces + 2 }} />
-        ))
+        value.map((current, index) => {
+          const itemPath = calculateItemPath(index);
+          return <Property
+            key={itemPath}
+            print={{ value: current, spaces: spaces + 2 }}
+            path={itemPath}
+            onPropertyClicked={onPropertyClicked}
+          />
+        })
       }
       {'\n],\n'}
     </span>
