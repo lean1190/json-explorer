@@ -1,0 +1,28 @@
+.json-explorer {
+    width: 500px;
+    margin: 0 auto;
+}
+
+.form {
+    margin-bottom: 32px;
+}
+
+.form-input label {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.form-input input {
+    padding: 12px 8px;
+    width: 200px;
+}
+
+.property-value {
+    font-size: 12px;
+}
+
+.json-content {
+    border-radius: 4px;
+    padding: 16px;
+    border: 1px solid;
+}
