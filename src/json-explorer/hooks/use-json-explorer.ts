@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from "react";
-import { extractNestedValue } from "../extract";
+import { extractNestedValue } from "../functions/extract";
 import { JsonObject } from "../types";
 
 export default function useJsonExplorer<T extends JsonObject>(jsonObject: T) {

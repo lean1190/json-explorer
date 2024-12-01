@@ -18,6 +18,8 @@ export default function JsonExplorer<T extends JsonObject>({ jsonObject }: Props
 
   return (
     <article className="json-explorer">
+      <h1>JSON Explorer</h1>
+
       <form name="json-explorer" className="form">
         <div className="form-input">
           <label htmlFor="property">Property</label>

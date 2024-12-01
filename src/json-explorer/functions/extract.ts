@@ -7,29 +7,36 @@ export function extractNestedValue(res: JsonObject, path: string): Value | undef
 
   try {
     // Remove "res." prefix and split the path into segments
-    const pathSegments = path.replace(/^res\./, '').split(/[.[\]]/).filter(Boolean);
+    const pathSegments = path
+      .replace(/^res\./, '')
+      .split(/[.[\]]/)
+      .filter(Boolean);
 
     // Traverse the res object based on the segments
-    let current: JsonObject | Value = res;
+    let value: JsonObject | Value = res;
     for (const segment of pathSegments) {
-      // Check if the segment is a number (for array indices)
       const index = Number(segment);
       if (!isNaN(index)) {
         // Handle array indexing
-        if (!Array.isArray(current) || index >= current.length) {
+        if (!Array.isArray(value) || index >= value.length) {
           return undefined;
         }
-        current = current[index];
+        value = value[index];
       } else {
         // Handle object properties
-        if (!current || typeof current !== 'object' || !(segment in current)) {
+        if (!value || typeof value !== 'object' || !(segment in value)) {
           return undefined;
         }
-        current = (current as JsonObject)[segment];
+        value = (value as JsonObject)[segment];
       }
     }
 
-    return current;
+    // Return undefined if the resolved value is an array, object, or null
+    if (typeof value === 'object' && value !== null) {
+      return undefined;
+    }
+
+    return value;
   } catch {
     return undefined;
   }
