@@ -23,12 +23,15 @@ export default function ObjectProperty({
     <span>
       {spaceCharacters}
       {print.propertyName ? (
-        <span
-          className="property"
-          onClick={onPropertySelected}
-        >
-          {`${print.propertyName}: `}
-        </span>
+        <>
+          <span
+            className="property"
+            onClick={onPropertySelected}
+          >
+            {`${print.propertyName}`}
+          </span>
+          {': '}
+        </>
       ) : ''}
       {`{\n`}
       {

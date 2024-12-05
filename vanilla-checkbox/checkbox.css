@@ -38,7 +38,7 @@
     transform: rotate(45deg);
 }
 
-.custom-checkbox input[type="checkbox"]:focus + span,
+.custom-checkbox input[type="checkbox"]:focus-visible + span,
 .focus-outline {
     outline: 2px solid blue;
     outline-offset: 2px;
