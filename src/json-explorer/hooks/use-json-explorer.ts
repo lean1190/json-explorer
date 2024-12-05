@@ -1,19 +1,20 @@
 import { useState, useMemo, useCallback } from "react";
-import { extractNestedValue } from "../functions/extract";
-import { JsonObject } from "../types";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
-export default function useJsonExplorer<T extends JsonObject>(jsonObject: T) {
+export default function useJsonExplorer() {
+  const paths = useSelector((state: RootState) => state.paths);
   const [typedPropertyAccessor, setTypedPropertyAccessor] = useState<string>('');
 
   const accessedPropertyValue = useMemo(() => {
-    const value = extractNestedValue(jsonObject, typedPropertyAccessor);
+    const value = paths[typedPropertyAccessor];
 
     if (value === null) {
       return 'null';
     }
 
     return value?.toString() ?? 'undefined';
-  }, [jsonObject, typedPropertyAccessor]);
+  }, [paths, typedPropertyAccessor]);
 
   const onPropertyClicked = useCallback((propertyPath: string) => {
     setTypedPropertyAccessor(() => propertyPath);

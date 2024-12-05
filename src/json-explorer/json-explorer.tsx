@@ -14,7 +14,7 @@ export default function JsonExplorer({ jsonObject }: Props) {
     accessedPropertyValue,
     setTypedPropertyAccessor,
     onPropertyClicked
-  } = useJsonExplorer(jsonObject);
+  } = useJsonExplorer();
 
   return (
     <article className="json-explorer">

@@ -1,3 +1,4 @@
+import { isArray, isObject, isPrimitiveValue } from "../functions/type";
 import { DisplayPropertyComponent, JsonObject, Print } from "../types";
 import ArrayProperty from "./array";
 import ObjectProperty from "./object";
@@ -16,7 +17,7 @@ export default function Property({
   path,
   onPropertyClicked
 }: Props): JSX.Element {
-  if (typeof value === 'boolean' || typeof value === 'number' || typeof value === 'string' || value === null) {
+  if (isPrimitiveValue(value)) {
     return <PrimitiveProperty
       print={{ value, propertyName, spaces }}
       path={path}
@@ -24,15 +25,19 @@ export default function Property({
     />;
   }
 
-  if (Array.isArray(value)) {
+  if (isArray(value)) {
     return <ArrayProperty
-      print={{ value, propertyName, spaces }}
+      print={{
+        value: value as [],
+        propertyName,
+        spaces
+      }}
       path={path}
       onPropertyClicked={onPropertyClicked}
     />;
   }
 
-  if (typeof value === 'object') {
+  if (isObject(value)) {
     return <ObjectProperty
       print={{
         value: value as JsonObject,
