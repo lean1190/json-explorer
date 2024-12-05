@@ -1,4 +1,4 @@
-import { JsonObject, Value } from './types';
+import { JsonObject, Value } from '../types';
 
 export function extractNestedValue(res: JsonObject, path: string): Value | undefined {
   if (!path || typeof path !== 'string') {
@@ -32,7 +32,11 @@ export function extractNestedValue(res: JsonObject, path: string): Value | undef
     }
 
     // Return undefined if the resolved value is an array, object, or null
-    if (typeof value === 'object' && value !== null) {
+    if (value === null) {
+      return null;
+    }
+
+    if (typeof value === 'object') {
       return undefined;
     }
 

@@ -16,7 +16,7 @@ export default function Property({
   path,
   onPropertyClicked
 }: Props): JSX.Element {
-  if (typeof value === 'boolean' || typeof value === 'number' || typeof value === 'string') {
+  if (typeof value === 'boolean' || typeof value === 'number' || typeof value === 'string' || value === null) {
     return <PrimitiveProperty
       print={{ value, propertyName, spaces }}
       path={path}

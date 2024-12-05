@@ -14,7 +14,6 @@ export default function PrimitiveProperty({
 
   const {
     spaceCharacters,
-    calculatedPath,
     onPropertySelected
   } = useJsonProperty({ print, path, onPropertyClicked });
 
@@ -27,7 +26,6 @@ export default function PrimitiveProperty({
         <>
           <span
             className="property"
-            data-path={calculatedPath}
             onClick={onPropertySelected}
           >
             {print.propertyName}
@@ -35,7 +33,7 @@ export default function PrimitiveProperty({
           :{' '}
         </>
       ) : '')}
-      {(isString ? `'${print.value.toString()}'` : print.value.toString())}
+      {(isString ? `'${print.value}'` : `${print.value}`)}
       {',\n'}
     </span>
   );

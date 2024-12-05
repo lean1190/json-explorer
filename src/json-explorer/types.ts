@@ -1,4 +1,4 @@
-export type Value = boolean | number | string | object | [];
+export type Value = boolean | number | string | object | [] | null;
 export type JsonObject = Record<string, Value>;
 
 export interface DisplayPropertyComponent {

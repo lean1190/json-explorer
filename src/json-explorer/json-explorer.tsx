@@ -3,11 +3,11 @@ import { JsonObject } from './types';
 import Property from './components/property';
 import useJsonExplorer from './hooks/use-json-explorer';
 
-interface Props<T extends JsonObject> {
-  jsonObject: T;
+interface Props {
+  jsonObject: JsonObject;
 }
 
-export default function JsonExplorer<T extends JsonObject>({ jsonObject }: Props<T>) {
+export default function JsonExplorer({ jsonObject }: Props) {
 
   const {
     typedPropertyAccessor,

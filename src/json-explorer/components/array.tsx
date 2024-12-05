@@ -14,7 +14,6 @@ export default function ArrayProperty({
 
   const {
     spaceCharacters,
-    calculatedPath,
     calculateItemPath,
     onPropertySelected
   } = useJsonProperty({ print, path, onPropertyClicked });
@@ -22,18 +21,15 @@ export default function ArrayProperty({
   return (
     <span>
       {spaceCharacters}
-      {
-        <>
-          <span
-            className="property"
-            data-path={calculatedPath}
-            onClick={onPropertySelected}
-          >
-            {print.propertyName}
-          </span>
-          {': [\n'}
-        </>
-      }
+      {print.propertyName ? (
+        <span
+          className="property"
+          onClick={onPropertySelected}
+        >
+          {`${print.propertyName}: `}
+        </span>
+      ) : ''}
+      {`[\n`}
       {
         print.value.map((current, index) => {
           const itemPath = calculateItemPath(index);
@@ -45,7 +41,7 @@ export default function ArrayProperty({
           />
         })
       }
-      {'\n],\n'}
+      {`${spaceCharacters}],\n`}
     </span>
   );
 }

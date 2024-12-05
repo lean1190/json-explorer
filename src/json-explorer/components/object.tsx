@@ -13,22 +13,31 @@ export default function ObjectProperty({
   onPropertyClicked
 }: Props): JSX.Element {
 
-  const { spaceCharacters } = useJsonProperty({ print, path, onPropertyClicked });
+  const {
+    spaceCharacters,
+    calculatedPath,
+    onPropertySelected
+  } = useJsonProperty({ print, path, onPropertyClicked });
 
   return (
     <span>
-      {
-        spaceCharacters +
-        (print.propertyName ? `${print.propertyName}: ` : '') +
-        (`{\n`)
-      }
+      {spaceCharacters}
+      {print.propertyName ? (
+        <span
+          className="property"
+          onClick={onPropertySelected}
+        >
+          {`${print.propertyName}: `}
+        </span>
+      ) : ''}
+      {`{\n`}
       {
         Object
           .getOwnPropertyNames((print.value))
           .map((property) => (
             <Property
               key={property}
-              path={path}
+              path={calculatedPath}
               print={{
                 value: (print.value as JsonObject)[property],
                 propertyName: property,
@@ -38,7 +47,7 @@ export default function ObjectProperty({
             />
           ))
       }
-      {`${spaceCharacters}},`}
+      {`${spaceCharacters}},\n`}
     </span>
   );
 }
