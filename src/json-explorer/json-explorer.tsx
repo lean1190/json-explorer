@@ -39,19 +39,11 @@ export default function JsonExplorer({ jsonObject }: Props) {
       <section>
         <p><strong>Response</strong></p>
         <pre role="document" aria-label="JSON Data" className="json-content">
-          {Object
-            .getOwnPropertyNames(jsonObject)
-            .map((propertyName) => (
-              <Property
-                key={propertyName}
-                print={{
-                  value: jsonObject[propertyName],
-                  propertyName
-                }}
-                path="res"
-                onPropertyClicked={onPropertyClicked}
-              />))
-          }
+          <Property
+            print={{ value: jsonObject }}
+            path="res"
+            onPropertyClicked={onPropertyClicked}
+          />
         </pre>
       </section>
     </article>
